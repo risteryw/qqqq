@@ -1,34 +1,45 @@
 const choices = ['Камень', 'Ножницы','Бумага', 'Ящерица','Спок']
-const userChoices = ['Камень', 'Ножницы','Бумага', 'Ящерица','Спок']
-let counter = 0
+let computerWinsCounter = 0
+let userWinCounter = 0
 const history = []
-while (counter < userChoices.length) {
-    let user = userChoices[counter]
-    let computer = choices[Math.round(Math.random() * 4)]
+function getRandomComputerChoise(){
+    return choices[Math.round(Math.random() * 4)]
+}
+while (computerWinsCounter < 3 && userWinCounter < 3) {
+    const promtUserData = prompt('Введи Камень, Ножницы, Бумага, Ящерица, Спок')
+    if (!choices.includes(promtUserData))
+    console.log('Нет такого варианта')
+    continue
+}
+    const computerChoise = getRandomComputerChoise()
     let result = ''
-    if (user === computer) {
+    if (promtUserData === computerChoise) {
         result = 'Ничья'
     } else if (
-        (user === 'Камень' && (computer === 'Ножницы' || computer === 'Ящерица')) ||
-        (user=== 'Ножницы' && (computer=== 'Бумага' || computer === 'Ящерица')) ||
-        (user === 'Бумага' && (computer === 'Камень' || computer === 'Спок')) ||
-        (user === 'Ящерица' && (computer === 'Спок' || computer === 'Бумага')) ||
-        (user === 'Спок' && (computer=== 'Ножницы' || computer=== 'Камень'))
+        (promtUserData === 'Камень' && (computerChoise === 'Ножницы' || computerChoise === 'Ящерица')) ||
+        (promtUserData === 'Ножницы' && (computerChoise === 'Бумага' || computerChoise === 'Ящерица')) ||
+        (promtUserData === 'Бумага' && (computerChoise === 'Камень' || computerChoise === 'Спок')) ||
+        (promtUserData === 'Ящерица' && (computerChoise === 'Спок' || computerChoise === 'Бумага')) ||
+        (promtUserData === 'Спок' && (computerChoise === 'Ножницы' || computerChoise === 'Камень'))
     ) {
         result = 'Победил игрок'
+        userWinCounter++
     } else {
         result = 'Победил компьютер'
+        computerWinsCounter++
     }
     history.push(
-        'Раунд' + (counter + 1) +
-        ': Игрок - ' + user +
-        ', Компьютер - ' + computer +
+        'Раунд' + (history.length + 1) +
+        ': Игрок - ' + promtUserData +
+        ', Компьютер - ' + computerChoise +
         '. ' + result
     )
-    counter++
-}
-counter = 0
+    console.log(result)
+console.log('История игры')
+let counter = 0
 while (counter < history.length) {
     console.log(history[counter])
     counter++
 }
+console.log('Победа игрока: ' + userWinCounter)
+console.log('Победа компьютера: ' + computerWinsCounter)
